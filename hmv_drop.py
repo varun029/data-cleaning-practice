@@ -6,44 +6,27 @@ Steps to handle missing values
 4. Drop missing values / Filling in missing values
 '''
 
-import pandas as pd
 import numpy as np
+from utils import read
+from utils import missing
+from utils import drop
+from utils import columns_drop_summary
 
 #reading the csv file
-permit_data=pd.read_csv('/Users/vandana/Desktop/data-cleaning-practice/Building_Permits.csv')
-print(permit_data.head())
-print('\n')
+permit_data=read.read_file('./datasets/Building_Permits.csv')
 
 #set seed for reproductibility
 np.random.seed(0)
 
 #finding missing values per column
-missing_values=permit_data.isnull().sum()
-print('The number of missing values per column are: ')
-print(missing_values)
-print('\n')
+missing_vals=missing.miss_val_column(permit_data)
 
 #finding total missing values and percentage of missing values
-total_cells=np.prod(permit_data.shape)
-total_missing_val=missing_values.sum()
+percent_missing=missing.miss_val_percentage(permit_data,missing_vals)
 
-percent_missing=(total_missing_val/total_cells)*100
-print(f'The percentage of missing values in the dataset are: {percent_missing}%')
-print('\n')
-
-'''remove all rows with a missing value
-
-permit_data.dropna()
-
-'''
 #remove all columns with atleast one missing value
-columns_w_na_dropped=permit_data.dropna(axis=1)
-print('head after dropping columns with atleast one missing value:')
-print(columns_w_na_dropped.head())
-print('\n')
+columns_w_na_dropped=drop.drop_column(permit_data)
 
 #finding how much data did we lose
-print(f'columns in original dataset: {permit_data.shape[1]}')
-print(f'columns after dropping na values: {columns_w_na_dropped.shape[1]}')
-
+columns_drop_summary.compare_column_count(permit_data,columns_w_na_dropped)
 
