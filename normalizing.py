@@ -16,6 +16,7 @@ index_positive_pledges=kickstarter_data.pledged > 0
 
 # get only positive pledges (using their indexes)
 positive_pledges=kickstarter_data.pledged.loc[index_positive_pledges]
+#print(positive_pledges.values)
 
 #normalize the data
 normalized_data=pd.Series(stats.boxcox(positive_pledges)[0],name='pledged',index=positive_pledges.index)
