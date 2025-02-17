@@ -11,4 +11,5 @@ print(result)
 
 police_killings=pd.read_csv('./datasets/PoliceKillingsUS.csv',encoding='windows-1250')
 
+#printing the output
 print(police_killings.head())
